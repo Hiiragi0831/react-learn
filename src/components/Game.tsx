@@ -1,5 +1,6 @@
 import React from 'react';
 import '../style/Game.scss';
+import {Attribute} from "./Attributes";
 
 class Game extends React.Component {
     state: {
@@ -9,70 +10,90 @@ class Game extends React.Component {
         vitality: number;
         evasion: number;
         energy: number;
-        strength: number;
-        agility: number;
-        intellect: number;
-        charisma: number;
-        skills: any;
+        attributes: any;
     };
     constructor(props: {} | Readonly<{}>) {
         super(props);
 
         this.state = {
-            name: 'Name',
-            heal: 3,
+            name: 'Alex',
             freePoints: 50,
+            heal: 3,
             vitality: 3,
             evasion: 10,
             energy: 0,
-            strength: 0,
-            agility: 0,
-            intellect: 0,
-            charisma: 0,
-            skills: [
+            attributes: [
                 {
-                    name: 'Атака',
+                    name: "Сила",
                     value: 0,
-                    level: 0,
-                }, {
-                    name: 'Стелс',
+                    skills: [
+                        {
+                            name: "Атака",
+                            value: 0,
+                        }
+                    ]
+                },
+                {
+                    name: "Ловкость",
                     value: 0,
-                    level: 0,
-                }, {
-                    name: 'Стрельба из лука',
+                    skills: [
+                        {
+                            name: "Стелс",
+                            value: 0,
+                        },
+                        {
+                            name: "Стрельба из лука",
+                            value: 0,
+                        },
+                    ]
+                },
+                {
+                    name: "Интеллект",
                     value: 0,
-                    level: 0,
-                }, {
-                    name: 'Обучаемость',
+                    skills: [
+                        {
+                            name: "Обучаемость",
+                            value: 0,
+                        },
+                        {
+                            name: "Выживание",
+                            value: 0,
+                        },
+                        {
+                            name: "Медицина",
+                            value: 0,
+                        },
+                    ]
+                },
+                {
+                    name: "Харизма",
                     value: 0,
-                    level: 0,
-                }, {
-                    name: 'Выживание',
-                    value: 0,
-                    level: 0,
-                }, {
-                    name: 'Медицина',
-                    value: 0,
-                    level: 0,
-                }, {
-                    name: 'Запугивание',
-                    value: 0,
-                    level: 0,
-                }, {
-                    name: 'Проницательность',
-                    value: 0,
-                    level: 0,
-                }, {
-                    name: 'Внешний вид',
-                    value: 0,
-                    level: 0,
-                }, {
-                    name: 'Манипулирование',
-                    value: 0,
-                    level: 0,
+                    skills: [
+                        {
+                            name: "Запугивание",
+                            value: 0,
+                        },
+                        {
+                            name: "Проницательность",
+                            value: 0,
+                        },
+                        {
+                            name: "Внешний вид",
+                            value: 0,
+                        },
+                        {
+                            name: "Манипулирование",
+                            value: 0,
+                        },
+                    ]
                 },
             ]
         };
+    }
+
+    attributeClick() {
+        const hero = Object.assign({}, this.state);
+
     }
 
     render() {
@@ -80,7 +101,15 @@ class Game extends React.Component {
             <div className="Game">
                 <div className="Game__row">
                     <h1>Game</h1>
-                    <p>{this.state.name}</p>
+                    <div className="Game__person">
+                        <div className="Game__avatar">Avatar</div>
+                        <div className="Game__name"><input name="name" value={this.state.name}/></div>
+                    </div>
+                    <div className="Game__attributes">
+                        <Attribute name="Жизненная сила" value="0"></Attribute>
+                        <Attribute name="Уклонение" value="0"></Attribute>
+                        <Attribute name="Энергичность" value="0"></Attribute>
+                    </div>
                 </div>
             </div>
         );
