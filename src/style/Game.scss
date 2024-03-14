@@ -7,10 +7,24 @@
         width: 100%;
         max-width: 1200px;
     }
+
+    &__attributes {
+        width: 300px;
+    }
 }
 
 
 .attribute {
-    display: flex;
-    gap: 20px;
+    &__box {
+        display: flex;
+        gap: 20px;
+    }
+
+    &__name {
+        margin-right: auto;
+    }
+
+    .attributes {
+        padding-left: 20px;
+    }
 }

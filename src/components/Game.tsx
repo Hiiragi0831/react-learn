@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import '../style/Game.scss';
-import {Attribute} from "./Attributes";
+import {Attribute, Attributes} from "./Attributes";
 
 export default function Game() {
-    const hero = {
+    const [hero, setHero] = useState({
         name: 'Alex',
         freePoints: 50,
         heal: 3,
@@ -76,12 +76,19 @@ export default function Game() {
                 ]
             },
         ]
-    };
+    });
 
-    const [count, setCount] = useState(0);
+    function findItem(arr: any, key: string) {
+        console.log(arr, key)
+        return arr.find((item: { name: string; }) => item.name === key)
+    }
+    function handleClick(key: string) {
+        const heroPerson = Object.assign({}, hero);
+        // console.log(key, hero, heroPerson);
+        let attr = findItem(hero.attributes, key);
+        // console.log(attr)
 
-    function handleClick() {
-        setCount(count + 1);
+        setHero(heroPerson)
     }
 
     return (
@@ -93,9 +100,10 @@ export default function Game() {
                     <div className="Game__name"><input name="name" value={hero.name}/></div>
                 </div>
                 <div className="Game__attributes">
-                    <Attribute name="Жизненная сила" value={count} onClick={handleClick}></Attribute>
-                    <Attribute name="Уклонение" value={count} onClick={handleClick}></Attribute>
-                    <Attribute name="Энергичность" value={count} onClick={handleClick}></Attribute>
+                    <Attributes
+                        arr={hero.attributes}
+                        onClick={(key:any) => handleClick(key)}
+                    />
                 </div>
             </div>
         </div>
