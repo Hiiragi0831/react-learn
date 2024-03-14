@@ -10,7 +10,7 @@ const Attribute = (props: any) => {
         <div className="attribute">
             <div className="attribute__name">{props.name}</div>
             <div className="attribute__value">{props.value}</div>
-            <button className="attribute__btn" onClick={count(props.value)}>+</button>
+            <button className="attribute__btn">+</button>
         </div>
     )
 }
