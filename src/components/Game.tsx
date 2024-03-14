@@ -81,6 +81,12 @@ export default function Game() {
     function findItem(arr: any, key: string) {
         return arr.find((item: { name: string; }) => item.name === key)
     }
+
+    function changeName(evt: any) {
+        const heroPerson = Object.assign({}, hero);
+        heroPerson.name = evt.target.value;
+        setHero(heroPerson);
+    }
     function handleClick(key: string) {
         const heroPerson = Object.assign({}, hero);
         let attr = findItem(hero.attributes, key);
@@ -88,11 +94,13 @@ export default function Game() {
             hero.attributes.forEach((item) => {
                 if (findItem(item.skills, key)) {
                     attr = findItem(item.skills, key);
+                    console.log(item.value);
                 }
             })
         }
-        console.log(attr)
-        setHero(heroPerson)
+        attr.value++
+        // console.log(attr);
+        setHero(heroPerson);
     }
 
     return (
@@ -105,16 +113,14 @@ export default function Game() {
                         <input
                             name="name"
                             value={hero?.name || ""}
-                            onChange={() => {
-                                console.log("handler!");
-                            }}
+                            onChange={changeName}
                         />
-
                     </div>
                 </div>
                 <div className="Game__attributes">
                     <Attributes
                         attributes={hero?.attributes}
+                        isActive={Boolean(hero.freePoints)}
                         onClick={(key:any) => handleClick(key)}
                     />
                 </div>
