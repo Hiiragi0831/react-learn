@@ -79,15 +79,19 @@ export default function Game() {
     });
 
     function findItem(arr: any, key: string) {
-        console.log(arr, key)
         return arr.find((item: { name: string; }) => item.name === key)
     }
     function handleClick(key: string) {
         const heroPerson = Object.assign({}, hero);
-        // console.log(key, hero, heroPerson);
         let attr = findItem(hero.attributes, key);
-        // console.log(attr)
-
+        if (!attr) {
+            hero.attributes.forEach((item) => {
+                if (findItem(item.skills, key)) {
+                    attr = findItem(item.skills, key);
+                }
+            })
+        }
+        console.log(attr)
         setHero(heroPerson)
     }
 
@@ -97,11 +101,20 @@ export default function Game() {
                 <h1>Game</h1>
                 <div className="Game__person">
                     <div className="Game__avatar">Avatar</div>
-                    <div className="Game__name"><input name="name" value={hero.name}/></div>
+                    <div className="Game__name">
+                        <input
+                            name="name"
+                            value={hero?.name || ""}
+                            onChange={() => {
+                                console.log("handler!");
+                            }}
+                        />
+
+                    </div>
                 </div>
                 <div className="Game__attributes">
                     <Attributes
-                        arr={hero.attributes}
+                        attributes={hero?.attributes}
                         onClick={(key:any) => handleClick(key)}
                     />
                 </div>

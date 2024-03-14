@@ -4,7 +4,6 @@ const Attribute = (props: any) => {
     // function handleClick() {
     //     setCount(count + 1);
     // }
-    // console.log(props)
     return (
         <div className="attribute">
             <div className="attribute__box">
@@ -18,13 +17,35 @@ const Attribute = (props: any) => {
 }
 
 const Attributes = (props: any) => {
-    // const ATTRIBUTES = props.attributes;
-
-    console.log(props)
-
     return (
         <div className="attributes">
+            {
+                props.attributes ? props.attributes.map((attribute: any) => {
+                        if (attribute.skills) {
 
+                            return <Attribute
+                                name={attribute.name}
+                                value={attribute.value}
+                                isActive={props.isActive}
+                                onClick={() => props.onClick(attribute.name)}
+                            >
+                                <Attributes
+                                    attributes={attribute.skills}
+                                    isActive={props.isActive}
+                                    onClick={props.onClick}
+                                />
+                            </Attribute>
+                        }
+
+                        return <Attribute
+                            name={attribute.name}
+                            value={attribute.value}
+                            isActive={props.isActive}
+                            onClick={() => props.onClick(attribute.name)}
+                        />
+                    })
+                    : (props.children)
+            }
         </div>
     )
 }
