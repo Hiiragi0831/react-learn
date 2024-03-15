@@ -4,7 +4,11 @@ const Attribute = (props: any) => {
             <div className="attribute__box">
                 <div className="attribute__name">{props.name}</div>
                 <div className="attribute__value">{props.value}</div>
-                <button className="attribute__btn" onClick={props.onClick} disabled={!props.isActive}>+</button>
+                <button className={`
+                    attribute__btn 
+                    ${props.isActive > 0 ? 'is-active' : ''}
+                    ${props.value >= props.parent ? 'is-disabled' : ''}
+                    `} onClick={props.onClick}>+</button>
             </div>
             {(props.children)}
         </div>
@@ -22,6 +26,7 @@ const Attributes = (props: any) => {
                                 name={attribute.name}
                                 value={attribute.value}
                                 isActive={props.isActive}
+                                parent={props.parent}
                                 onClick={() => props.onClick(attribute.name)}
                             >
                                 <Attributes
@@ -37,6 +42,7 @@ const Attributes = (props: any) => {
                             name={attribute.name}
                             value={attribute.value}
                             isActive={props.isActive}
+                            parent={attribute.parent}
                             onClick={() => props.onClick(attribute.name)}
                         />
                     })

@@ -5,7 +5,7 @@ import {Attribute, Attributes} from "./Attributes";
 export default function Game() {
     const [hero, setHero] = useState({
         name: 'Alex',
-        freePoints: 50,
+        points: 33,
         heal: 3,
         vitality: 3,
         evasion: 10,
@@ -18,6 +18,7 @@ export default function Game() {
                     {
                         name: "Атака",
                         value: 0,
+                        parent: 0,
                     }
                 ]
             },
@@ -28,10 +29,12 @@ export default function Game() {
                     {
                         name: "Стелс",
                         value: 0,
+                        parent: 0,
                     },
                     {
                         name: "Стрельба из лука",
                         value: 0,
+                        parent: 0,
                     },
                 ]
             },
@@ -42,14 +45,17 @@ export default function Game() {
                     {
                         name: "Обучаемость",
                         value: 0,
+                        parent: 0,
                     },
                     {
                         name: "Выживание",
                         value: 0,
+                        parent: 0,
                     },
                     {
                         name: "Медицина",
                         value: 0,
+                        parent: 0,
                     },
                 ]
             },
@@ -60,18 +66,22 @@ export default function Game() {
                     {
                         name: "Запугивание",
                         value: 0,
+                        parent: 0,
                     },
                     {
                         name: "Проницательность",
                         value: 0,
+                        parent: 0,
                     },
                     {
                         name: "Внешний вид",
                         value: 0,
+                        parent: 0,
                     },
                     {
                         name: "Манипулирование",
                         value: 0,
+                        parent: 0,
                     },
                 ]
             },
@@ -87,6 +97,7 @@ export default function Game() {
         heroPerson.name = evt.target.value;
         setHero(heroPerson);
     }
+
     function handleClick(key: string) {
         const heroPerson = Object.assign({}, hero);
         let attr = findItem(hero.attributes, key);
@@ -94,12 +105,18 @@ export default function Game() {
             hero.attributes.forEach((item) => {
                 if (findItem(item.skills, key)) {
                     attr = findItem(item.skills, key);
-                    console.log(item.value);
                 }
             })
+        } else {
+            hero.attributes.forEach((item) => {
+                item.skills.forEach(i => i.parent++);
+            });
         }
-        attr.value++
-        // console.log(attr);
+        attr.value++;
+        heroPerson.points--;
+        heroPerson.vitality = findItem(heroPerson.attributes, 'Сила').value + 3;
+        heroPerson.evasion = findItem(heroPerson.attributes, 'Ловкость').value + 10;
+        heroPerson.energy = findItem(heroPerson.attributes, 'Ловкость').value + findItem(heroPerson.attributes, 'Интеллект').value;
         setHero(heroPerson);
     }
 
@@ -118,10 +135,15 @@ export default function Game() {
                     </div>
                 </div>
                 <div className="Game__attributes">
+                    <Attributes>
+                        <Attribute name={'Жизненная сила'} value={hero.vitality} />
+                        <Attribute name={'Уклонение'} value={hero.evasion} />
+                        <Attribute name={'Энергичность'} value={hero.energy} />
+                    </Attributes>
                     <Attributes
                         attributes={hero?.attributes}
-                        isActive={Boolean(hero.freePoints)}
-                        onClick={(key:any) => handleClick(key)}
+                        isActive={hero?.points}
+                        onClick={(key: any, value: any) => handleClick(key)}
                     />
                 </div>
             </div>

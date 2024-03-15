@@ -27,4 +27,17 @@
     .attributes {
         padding-left: 20px;
     }
+
+    &__btn {
+        width: 25px;
+        visibility: hidden;
+
+        &.is-active {
+            visibility: visible;
+        }
+
+        &.is-disabled {
+            visibility: hidden;
+        }
+    }
 }
